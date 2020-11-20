@@ -71,5 +71,5 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 Dashboard inspired by https://dashkit.goodthemes.co/index.html#!, build with chakra-ui + nivo + react-dnd + react-table
 Dashboard is in folder src/pages/dashboards/default.js
-
+Benchmark: Building all of this from scratch (only using the libraries listed above / in package.json) tok about 6h.
 
