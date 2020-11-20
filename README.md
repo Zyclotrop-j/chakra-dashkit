@@ -66,3 +66,10 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+# Content
+
+Dashboard inspired by https://dashkit.goodthemes.co/index.html#!, build with chakra-ui + nivo + react-dnd + react-table
+Dashboard is in folder src/pages/dashboards/default.js
+
+
