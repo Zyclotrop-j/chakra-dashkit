@@ -1,68 +1,64 @@
-import React, { useRef } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
-import { Box, Checkbox } from '@chakra-ui/react';
+import {
+    Flex,
+    Box,
+    Spacer,
+    Stat,
+    StatLabel,
+    StatNumber,
+    StatHelpText,
+    Grid,
+    GridItem,
+    Tag,
+    Wrap,
+    WrapItem,
+    Text,
+    Square,
+    VStack,
+    StackDivider,
+    Heading,
+    Switch,
+    FormControl,
+    FormLabel,
+    Tabs,
+    TabList,
+    Tab,
+    Image,
+    Link,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
+    Button,
+    VisuallyHidden,
+    IconButton,
+    Avatar,
+    AvatarBadge,
+    Checkbox,
+    Input,
+    Divider
+} from '@chakra-ui/react';
+import { AbsBox } from "./absbox";
 
-const style = {
-    border: '1px dashed gray',
-    padding: '0.5rem 1rem',
-    marginBottom: '.5rem',
-    backgroundColor: 'white',
-    cursor: 'move',
-};
-
-const ItemTypes = {
-    CARD: 'card',
-  }
-export const Card = ({ id, text, index, moveCard, ticked }) => {
-    const ref = useRef(null);
-    const [, drop] = useDrop({
-        accept: ItemTypes.CARD,
-        hover(item, monitor) {
-            if (!ref.current) {
-                return;
-            }
-            const dragIndex = item.index;
-            const hoverIndex = index;
-            // Don't replace items with themselves
-            if (dragIndex === hoverIndex) {
-                return;
-            }
-            // Determine rectangle on screen
-            const hoverBoundingRect = ref.current?.getBoundingClientRect();
-            // Get vertical middle
-            const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-            // Determine mouse position
-            const clientOffset = monitor.getClientOffset();
-            // Get pixels to the top
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-            // Only perform the move when the mouse has crossed half of the items height
-            // When dragging downwards, only move when the cursor is below 50%
-            // When dragging upwards, only move when the cursor is above 50%
-            // Dragging downwards
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-                return;
-            }
-            // Dragging upwards
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-                return;
-            }
-            // Time to actually perform the action
-            moveCard(dragIndex, hoverIndex);
-            // Note: we're mutating the monitor item here!
-            // Generally it's better to avoid mutations,
-            // but it's good here for the sake of performance
-            // to avoid expensive index searches.
-            item.index = hoverIndex;
-        },
-    });
-    const [{ isDragging }, drag] = useDrag({
-        item: { type: ItemTypes.CARD, id, index },
-        collect: (monitor) => ({
-            isDragging: monitor.isDragging(),
-        }),
-    });
-    const opacity = isDragging ? 0 : 1;
-    drag(drop(ref));
-
-    return (<Box ref={ref}><Checkbox  defaultIsChecked={ticked}>{text}</Checkbox></Box>);
-};
+export const TabCard = ({ children, tabs, onChange, colSpan }) => (<GridItem borderRadius="md" p={2} colSpan={colSpan || 8} bg="white">
+<VStack 
+    spacing={4}
+    align="stretch"
+    p={3}
+    h="100%"
+>
+    <Tabs onChange={onChange} borderBottom="solid 1px" borderColor="gray.200">
+        <Flex alignItems="center">
+            <Box p={2}><Heading size="sm">Traffic Channels</Heading></Box>
+            <Spacer />
+            <TabList borderBottom="none">
+                {tabs.map(tabChildren => (<Tab pb="calc(0.5rem + 0.5rem)">{/* calc(0.5rem + 0.5rem) = default padding + pb={2} from flex*/}
+                    {tabChildren}
+                </Tab>))}
+            </TabList>
+        </Flex>
+    </Tabs>
+    <AbsBox>
+        {children}
+    </AbsBox>
+</VStack>
+</GridItem>);
